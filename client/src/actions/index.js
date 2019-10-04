@@ -31,13 +31,17 @@ export const web3Connect = () => async (dispatch) => {
 export const web3TorusConnect = () => async (dispatch) => {
   const web3 = await getWeb3Torus();
   const accounts = await web3.eth.getAccounts();
+  console.log(web3.currentProvider.networkVersion);
+  console.log(web3.currentProvider.networkVersion !== '3');
   if (web3.currentProvider.networkVersion !== '3') {
     alert('Unknown network, please change network to Ropsten testnet');
     return;
   }
+
   if (accounts.length > 0) {
     const account = accounts[0];
     let balance = await web3.eth.getBalance(account);
+    console.log(accounts.length);
     balance = parseFloat(web3.utils.fromWei(balance)).toFixed(2);
     dispatch({
       type: WEB3_CONNECT,

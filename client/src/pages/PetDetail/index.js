@@ -150,6 +150,7 @@ class PetDetail extends Component {
   };
   action() {
     let divcanvas = document.getElementById('box-canvas');
+    if (!divcanvas) return;
     this.stage.removeAllChildren();
     const img = new Image();
     img.src = Pet[this.state.type].background.src;
@@ -226,7 +227,6 @@ class PetDetail extends Component {
                         <strong>
                           {this.state.providentFund} / {this.state.targetFund}
                         </strong>
-                        TOMO
                       </div>
                     </CircularProgressbarWithChildren>
                   </div>
