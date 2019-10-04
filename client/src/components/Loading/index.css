@@ -1,0 +1,15 @@
+.centered {
+  position: absolute;
+  top: 50%;
+  /* margin: auto; */
+}
+
+.centered:hover {
+  cursor: pointer;
+}
+
+.wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

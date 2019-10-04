@@ -1,31 +1,28 @@
-.withdrawImg{
+.withdrawImg {
+  margin: auto;
+  width: 30px;
+  height: 30px;
+}
+.withdrawImg:hover {
+  transition: all 0.5s;
+  transform: scale(1.5);
+}
+.withdrawImg:hover {
+  transition: all 0.5s;
+  transform: scale(1.5);
+  cursor: pointer;
+}
+@media (max-width: 320px) {
+  .withdrawImg {
     margin: auto;
     width: 30px;
     height: 30px;
+  }
 }
-.withdrawImg:hover{
-    transition: all 0.5s;
-    transform: scale(1.5);
-}
-.withdrawImg:hover{
-    transition: all 0.5s;
-    transform: scale(1.5);
-}
-@media (max-width: 320px){
-    .withdrawImg{
+@media (max-width: 320px) {
+  .withdrawImg {
     margin: auto;
     width: 30px;
     height: 30px;
-}
-}
-.withdrawImg:hover{
-    transition: all 0.5s;
-    transform: scale(1.5);
-}
-@media (max-width: 320px){
-    .withdrawImg{
-    margin: auto;
-    width: 30px;
-    height: 30px;
-}
+  }
 }

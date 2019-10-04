@@ -49,15 +49,16 @@ class PetDetail extends Component {
     if (!window.web3) return;
     await store.dispatch(actions.web3TorusConnect());
 
-    // await store.dispatch(actions.instantiateContracts());
+    await store.dispatch(actions.instantiateContracts());
     await store.dispatch(actions.getAllPetsAddress());
+    console.log('pets', this.props.petsAddress);
     let PetInstance = new this.props.tomo.web3.eth.Contract(
       petWallet.abi,
       this.props.petsAddress[this.props.match.params.address]
     );
     this.stage = new createjs.Stage('canvas');
     var divcanvas = document.getElementById('box-canvas');
-    console.log(divcanvas.clientWidth);
+    if (!divcanvas) return;
 
     this.stage.canvas.height = (divcanvas.clientHeight * 2) / 3 - 50;
     this.stage.canvas.width = divcanvas.clientWidth;
@@ -107,26 +108,25 @@ class PetDetail extends Component {
     }
   }
 
-  handleSendChange = (e) => {
-    this.setState({ sendValue: e.target.value });
-  };
-
   feedPet = async (value) => {
     let PetInstance = this.state.petInstance;
     await PetInstance.methods
       .savingMoney(value)
       .send({ from: this.props.tomo.account, value: value * 10 ** 18 })
-      .then(async () => {
-        this.getPetInfo();
+      .on('transactionHash', (hash) => {
         this.setState({
           action: PetAction.FEED
         });
         this.action();
+      })
+      .on('receipt', (receipt) => {
+        this.getPetInfo();
+      })
+      .on('error', () => {
+        alert('Transaction failed');
+        this.setState({ action: PetAction.DEFAULT });
+        this.action();
       });
-  };
-
-  handleWithdrawChange = (e) => {
-    this.setState({ withdrawValue: e.target.value });
   };
 
   withDraw = async (value) => {
@@ -135,9 +135,16 @@ class PetDetail extends Component {
     await PetInstance.methods
       .withdrawMoney(amount)
       .send({ from: this.props.tomo.account })
-      .then(async () => {
+      .on('transactionHash', (hash) => {
+        this.setState({ action: PetAction.WITHDRAW });
+        this.action();
+      })
+      .on('receipt', (receipt) => {
         this.getPetInfo();
-        this.setState({ withdrawValue: '', action: PetAction.WITHDRAW });
+      })
+      .on('error', () => {
+        alert('Transaction failed');
+        this.setState({ action: PetAction.DEFAULT });
         this.action();
       });
   };

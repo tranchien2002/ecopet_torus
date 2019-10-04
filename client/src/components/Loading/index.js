@@ -1,14 +1,12 @@
 import React from 'react';
 import * as actions from 'actions';
 import store from 'store';
+import './index.css';
 class Loading extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
   login = () => {
     store.dispatch(actions.web3TorusConnect());
   };
+
   render() {
     return (
       <div>
@@ -18,7 +16,15 @@ class Loading extends React.Component {
             src={require('assets/img/lg.blue-longcat-spinner.gif')}
             className='gif-load'
           />
-          <button onClick={this.login}>Login</button>
+          <br />
+          <div className='wrapper'>
+            <img
+              alt='Login via Google'
+              className='centered'
+              src={require('assets/img/Torus_sign_in.svg')}
+              onClick={this.login}
+            />
+          </div>
         </div>
       </div>
     );
